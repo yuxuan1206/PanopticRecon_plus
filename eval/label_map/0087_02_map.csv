@@ -1,0 +1,15 @@
+idx,nyu40,class,label,thing,evaluated
+1,1,wall, 5, 0, 1
+2,5,chair, 2, 1, 1
+3,2,floor, 1, 0, 1
+4,7,table, 4, 1, 1
+5,8,doors, 8, 0, 1
+6,6,couch, 3, 1, 1
+39,18,couch, 3, 1, 1
+1313,6,sofa, 3, 1, 1
+24,7,coffee table, 4, 1, 1
+21,16,curtains, 7, 0, 1
+23,5,armchair, 2, 1, 1
+131,40,jacket, 9, 0, 1
+101,40,telephone, 6, 0, 0
+53,40,telephone, 6, 0, 0

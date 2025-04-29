@@ -1,0 +1,10 @@
+idx,class,label,thing,evaluated
+4, wall, 4, 0, 1
+8,ceiling,8,0, 1
+1,floor,1,0, 1
+7,door,7,1, 1
+3,table,3,1, 1
+2,office chair,2,1, 1
+5,whiteboard,5,1, 1
+9,object,9,0,-1
+6,flat panel display,6,1, 1
