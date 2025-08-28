@@ -55,6 +55,30 @@ def get_labels(scene):
             Label(  'clothes'              ,  9 ,     5,    (94, 106,211) ),
         ]
 
+    elif scene == '0000_02':
+        # ## 00
+        labels = [
+            #       name                     id   raw_id,    color
+            Label(  'unlabeled'            ,  0 ,     0 ,   (100,100,100) ),
+            Label(  'floor'                ,  1 ,     1 ,   (152,223,138) ),
+            Label(  'chair'                ,  2 ,     2 ,   (188,189, 34) ),
+            Label(  'couch'                ,  3 ,     2 ,   (140, 86, 75) ),
+            Label(  'table'                ,  4 ,     3,    (255,152,150) ),
+            Label(  'wall'                 ,  5 ,     4,    (174,199,232) ),
+            Label(  'cabinet'            ,  6 ,     5,    (255,127, 14) ),
+            Label(  'curtain'              ,  7 ,     5,    (219,219,141) ),
+            Label(  'door'                 ,  8 ,     5,    (214, 39, 40) ),
+            Label(  'shoes'              ,  9 ,     5,    (94, 106,211) ),
+            Label(  'bed'           ,  10 ,     5,    (96, 207,209) ),
+            Label(  'tv'                   , 11 ,     5,    ( 78, 71,183) ),
+            Label(  'bowl'                 , 12 ,     5,    ( 255,152,150) ),
+            Label(  'toilet'               , 13 ,     5,    ( 82, 84,163) ),
+            Label(  'trash can'            , 14 ,     5,    ( 82, 84,163) ),
+            Label(  'guitar'               , 15 ,     5,    ( 148,103,189) ),
+            Label(  'backpack'             , 16 ,     5,    ( 44,160, 44) ),
+            Label(  'bicycle'              , 17 ,     5,    ( 23,190,207) ),
+        ]
+
     elif scene == '0088_00':
         # ## 88
         labels = [

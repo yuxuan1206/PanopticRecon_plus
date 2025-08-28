@@ -1,6 +1,6 @@
 import os
 
-def get_scene_config(dataset, scene, dataset_root_path="/mnt/nas_new/yx/dataset/"):
+def get_scene_config(dataset, scene, dataset_root_path="/mnt/nas_new/yx/dataset/pami"):
     """
     Get scene configuration
     
@@ -17,8 +17,19 @@ def get_scene_config(dataset, scene, dataset_root_path="/mnt/nas_new/yx/dataset/
     }
     
     if dataset == 'scannet':
-        config["image_path"] = os.path.join(dataset_root_path, f"scannet/scans/scene{scene}/color")
-        config["save_path"] = os.path.join(dataset_root_path, f"scannet/GroundedSAM/scene{scene}")
+        config["image_path"] = os.path.join(dataset_root_path, f"scannet/scene{scene}/color")
+        config["save_path"] = os.path.join(dataset_root_path, f"groundedSAM/scannet/scene{scene}")
+
+        # scannet 0000_02 (1230-1550)
+        if scene == '0000_02':
+            config["text_prompt"] = "floor.carpet.wall.window.cabinet.door.towel.sink.painting.flush toilet.trashcan.dustbin.guitar.switch.fridge."
+            config["class_name"] = config["text_prompt"].split('.')
+            config["class_label"] = [1,1,2,3,4,5,6,7,8,9,10,10,11,12,13]
+            config["thing"] = [0,0,0,1,1,0,1,1,1,1,1,0,1]
+            # config["text_prompt"] = "floor.carpet.chair.couch.sofa.table.wall.cabinet.cabinet door.curtain.door.shoes.bed.tv.bowl.toilet.trash can.guitar.backpack.bicycle."
+            # config["class_name"] = config["text_prompt"].split('.')
+            # config["class_label"] = [1,1,2,3,3,4,5,6,6,7,8,9,10,11,12,13,14,15,16,17]
+            # config["thing"] = [0,0,1,1,1,0,0,0,0,0,0,1,1,1,1,1,1,1,1]
         
         # scannet 0087_02
         if scene == '0087_02':

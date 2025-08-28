@@ -165,7 +165,7 @@ class PanopticStat():
         for label in categories:
             if self.panoptic_per_cat[label].semantic_n == 0:
                 per_class_results[label] = {'iou': 0.0, 'acc': 0.0, 'iou_d': 0.0, 'acc_d': 0.0, 'valid': False}
-                n += 1 # 以防漏检的不算
+                n += 1
                 continue
             n += 1
             iou_class = self.panoptic_per_cat[label].semantic['iou'] / self.panoptic_per_cat[label].semantic_n
@@ -972,7 +972,7 @@ if __name__=='__main__':
     evaluator.reset(label_map, vis_path)
     panoptic_stat = evaluator.eval()
     # panoptic_stats += panoptic_stat
-    print(f"semantic评估类别: {evaluator.evaluated_labels}")
+    print(f"Evaluated semantic labels: {evaluator.evaluated_labels}")
     tables, json_result = print_panoptic_results(panoptic_stat, 
                                 categories=evaluator.evaluated_labels,
                                 label_mapping=evaluator.label_mapping,

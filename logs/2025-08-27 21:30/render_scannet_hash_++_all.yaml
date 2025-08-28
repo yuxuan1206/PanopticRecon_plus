@@ -1,0 +1,94 @@
+path: {data_basedir: /sdc1/yx/dataset/scannet++, dataset_dir: /Data/yx/dataset/scannet++/1ada7a0617,
+    seq: 0, instance_2d_data_path: /mnt/nas_new/yx/dataset/pami/groundedSAM/scannet++/1ada7a0617/instance_image,
+    semantic_2d_data_path: /mnt/nas_new/yx/dataset/pami/groundedSAM/scannet++/1ada7a0617/semantic_image,
+    proj_dir: /mnt/nas_new/yx/pami/exp/scannet++/1ada7a0617_test2, dataset_type: scannet}
+start_block_idx: 0
+pretrain: false
+ckpt_path: /sdf1/yx/pami/draw_fig/1ada7a0617_test/v0/grid/optimed_grid_0_19.pth
+BKGD: false
+PEmap: false
+Thing_class: [2, 3, 5, 6, 7, 10, 11, 12]
+Stuff_class: [1, 4, 8, 9, 13]
+3DGS: false
+vis: false
+ray_mode: ray
+curl: true
+sem_model: geo
+model: {model_name: SDF(sparse), network_structure: geo_rgb_sem}
+img: {height: 779, width: 1168, height_d: 389, width_d: 584}
+ray: {pc_radius: 10, min_z: -2.5, max_z: 5, self_z: 0, self_x: 0, self_y: 0, depth_min: 0.3}
+frame: {step: 1, num: 343}
+model_type: 3dgs
+3dgs_mode: None
+grid_otype: HashGrid
+grid:
+    sdf: {log2_hashmap_size: 22, base_resolution: 16, max_resolution: 2048, n_levels: 16,
+        n_features_per_level: 2}
+    semantic: {log2_hashmap_size: 22, base_resolution: 16, max_resolution: 1024, n_levels: 8,
+        n_features_per_level: 4}
+    instance: {log2_hashmap_size: 22, base_resolution: 16, max_resolution: 1024, n_levels: 8,
+        n_features_per_level: 4}
+decoder:
+    sdf:
+        W: 128
+        D: 1
+        output_ch: 1
+        skips: []
+        n_freq: 0
+        weight_norm: false
+        concat_qp: false
+    semantic:
+        W: 128
+        D: 1
+        output_ch: 14
+        skips: []
+        n_freq: 0
+        weight_norm: false
+        concat_qp: false
+instance: {hidden_dim: 32, num_heads: 8, dim_feedforward: 1024, num_decoders: 1, num_classes: 8,
+    dropout: 0.0, pre_norm: false, use_level_embed: false, normalize_pos_enc: true,
+    positional_encoding_type: fourier, gauss_scale: 1.0, shared_decoder: true, train_on_segments: false,
+    max_sample_size: false, non_parametric_queries: false, random_query_both: false,
+    random_normal: false, random_queries: false, use_np_features: false, distance_weight: true}
+panoptic:
+    W: 128
+    D: 1
+    skips: []
+    n_freq: 0
+    weight_norm: false
+    concat_qp: false
+octree: {feature_dim: 128, base_lod: 8, num_lods: 1}
+outside:
+    nerf:
+        D: 8
+        d_in: 4
+        d_in_view: 3
+        W: 256
+        multires: 10
+        multires_view: 4
+        output_ch: 4
+        skips: [4]
+        use_viewdirs: true
+params:
+    ray_chunk: 4096
+    ray_chunk_mode2: 80
+    ray_chunk_img: 1000
+    ray_chunk_test: 65536
+    N_sample: 150
+    near: 0.2
+    far: 3.0
+    grid_resolution: 256
+    voxel_sizes: [0.5, 2.0]
+    sem_feature_dim: [4, 2]
+loss_term: {normal: false, semantic2d: true, semantic3d: false, rgb: true, feature: false,
+    depth_completion: false, instance: true, panoptic: true}
+train:
+    all_pose: [0, 343]
+    optim_step: 260
+    mode2: {epoch: 25, depth_optim: true, pose_optim: false, query_position_optim: true,
+        query_radius_optim: true, delete_query: true, panoptic_term: true, pose_epoch: 4,
+        geometry_iter: 100, occ_lr: 0.01, rgb_lr: 0.015, pose_lr: 0, s_lr: 0.001,
+        sem_lr: 0.01, mlp_lr: 0.01, occ_lr_decay: 0.95, depth_lamuda: 2.5, depth_lamuda_decay: 1,
+        eik_lamuda: 1, smoothing_lamuda: 1, sdf_near_lamuda: 30, sdf_far_lamuda: 10,
+        normal_lamuda: 5, rgb_lamuda: 30, feature_lamuda: 80, semantic_lamuda: 80,
+        instance_lamuda: 80, render_depth: true, save_grid: true}

@@ -2,6 +2,7 @@ from groundingdino.util.inference import load_model, load_image, predict, annota
 import cv2
 import os, sys
 import argparse
+os.environ["CUDA_VISIBLE_DEVICES"] = "7"
 os.environ['CURL_CA_BUNDLE'] = ''
 os.environ['QT_QPA_PLATFORM']="offscreen"
 import torch
@@ -26,7 +27,8 @@ import colorsys
 from data.label import get_labels
 from data.scene_config import get_scene_config
 import json
-
+import warnings
+warnings.filterwarnings("ignore", message=".BoxAnnotator.")
 
 def load_models(args):
     """
@@ -133,11 +135,11 @@ def generate_mask(img_name, args, dino_model, sam_predictor, config, id2label, T
     os.makedirs(folder_instance, exist_ok=True)
     os.makedirs(folder_instance+'_rgb', exist_ok=True)
 
-    cv2.imwrite(os.path.join(folder_semanitc+'_rgb', f"{img_name}"), frame_with_semantic)
-    cv2.imwrite(os.path.join(folder_semanitc, f"{img_name}"), semantic_label.astype(np.int8))
+    cv2.imwrite(os.path.join(folder_semanitc+'_rgb', f"{img_name[:-4]}.png"), frame_with_semantic)
+    cv2.imwrite(os.path.join(folder_semanitc, f"{img_name[:-4]}.png"), semantic_label.astype(np.int8))
     
-    cv2.imwrite(os.path.join(folder_instance+'_rgb', f"{img_name}"), frame_with_instance)
-    cv2.imwrite(os.path.join(folder_instance, f"{img_name}"), instance_label.astype(np.int8))
+    cv2.imwrite(os.path.join(folder_instance+'_rgb', f"{img_name[:-4]}.png"), frame_with_instance)
+    cv2.imwrite(os.path.join(folder_instance, f"{img_name[:-4]}.png"), instance_label.astype(np.int8))
 
 
 def show_label(mask, image, id2label, mode='semantic'):
@@ -203,7 +205,7 @@ if __name__ == "__main__":
     Thing_sem = {}  # For instance images
     Segment_sem = {}
     
-    for img_name in tqdm(images):
+    for img_name in tqdm(images[1430:1550]):
         Thing_sem[img_name] = []
         generate_mask(
             img_name, 

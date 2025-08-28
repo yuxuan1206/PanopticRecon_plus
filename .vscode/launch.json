@@ -1,0 +1,58 @@
+{
+        // 使用 IntelliSense 了解相关属性。 
+        // 悬停以查看现有属性的描述。
+        // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "Python: Current File",
+                "type": "python",
+                "request": "launch",
+                "program": "${file}",
+                "console": "integratedTerminal",
+                "justMyCode": false, //true //
+                "args": [
+                // "-s", "/mnt/nas_new/yx/dataset/pami/scannet/scene0000_02", 
+                // "-m", "/mnt/nas_new/yx/pami/exp/scannet/0000_02/rgb", 
+                // "--input", "/home/yx/Data/exp_result/panoptic_recon++/scannet/0_input_ply/scene0000_02/pointcloud_gt_open3d.ply",
+                // "--skip", "1", "--port", "1021",
+                "-s", "/Data/yx/dataset/scannet++/1ada7a0617", "-m", "/mnt/nas_new/yx/pami/exp/scannet++/1ada7a0617_test/rgb", 
+                "--input", "/home/yx/Data/exp_result/panoptic_recon++/scannetpp/scen_1ada7a0617/0_input_ply/pointcloud_gt_open3d.ply", 
+                "--skip", "1", "--port", "1021", 
+                // "-s", "/Data/yx/dataset/scannet++/5748ce6f01", "-m", "/mnt/nas_new/yx/pami/exp/scannet++/5748ce6f01_wo_hsi_wo_pan/rgb", 
+                // "--input", "/home/yx/Data/exp_result/panoptic_recon++/scannetpp/scen_5748ce6f01/0_input_ply/pointcloud_gt_open3d.ply", 
+                // "--skip", "3", "--port", "1021", 
+                // "--input", "/sdc1/xyx/result/panoptic_recon++/scannetpp/scen_1ada7a0617/0_input_ply/pointcloud_gt_open3d.ply",
+                // "--skip", "1", "--port", "1021", //skip 10
+                // "-s", "/sdf1/yx/dataset/scannet/scans/scene0088_00", "-m", "/sdf1/yx/pami/draw_fig/0088_00_new/rgb", 
+                // "--input", "/sdf1/yx/dataset/scannet/3dgs_input_ply/scene0088_00/pointcloud_gt_open3d.ply",
+                // "--skip", "2", "--port", "1021", //skip 10
+                // "-s", "/mnt/nas_new/yx/dataset/pami/scannet/scene0087_02", 
+                // "-m", "/mnt/nas_new/yx/pami/exp/scannet/0087_02/rgb", 
+                // "--input", "/home/yx/Data/exp_result/panoptic_recon++/scannet/0_input_ply/scene0087_02/pointcloud_gt_open3d.ply",
+                // "--skip", "3", "--port", "1021", //skip 10
+                // "-s", "/sdc1/yx/dataset/scannet/scans/scene0420_01", "-m", "/sdb1/yx/pami/draw_fig/0420_01/rgb", 
+                // "--input", "/sdf1/yx/dataset/scannet/3dgs_input_ply/scene0420_01/pointcloud_gt_open3d.ply",
+                // "--skip", "3", "--port", "1021", //skip 10
+                // "-s", "/sdf1/yx/dataset/scannet/scans/scene0628_02", "-m", "/sdf1/yx/pami/draw_fig/0628_02/rgb", 
+                // "--input", "/sdf1/yx/dataset/scannet/3dgs_input_ply/scene0628_02/pointcloud_gt_open3d.ply",
+                // "--skip", "2", "--port", "1021", //skip 10
+                // "-s", "/sde1/yx/dataset/scannet++/data/5748ce6f01/dslr", "-m", "/sdf1/yx/pami/draw_fig/5748ce6f01_wo_pan_dice/rgb", 
+                // "--input", "/sdc1/xyx/result/panoptic_recon++/scannetpp/scen_5748ce6f01/0_input_ply/pointcloud_gt_open3d.ply",
+                // "--skip", "3", "--port", "1021", //skip 10
+                // "-s", "/sdf1/yx/dataset/scannet++/data/f6659a3107/dslr", "-m", "/sdf1/yx/pami/draw_fig/f6659a3107_wo_pan_prun/rgb", 
+                // "--input", "/sdc1/xyx/result/panoptic_recon++/scannetpp/scen_f6659a3107/0_input_ply/pointcloud_gt_open3d.ply",
+                // "--skip", "2", "--port", "1021", //skip 10
+                // "args": ["-s", "/sdf1/yx/dataset/scannet++/data/5748ce6f01/dslr", "-m", "/mnt/meadow/yx/exp_data/ijrr/rendering/scen_5748ce6f01/3dgs_depth_flat/rgb", 
+                // "--input", "/sdc1/xyx/result/panoptic_recon++/scannetpp/scen_5748ce6f01/0_input_ply/pointcloud_gt_open3d.ply",
+                // "--skip", "3", "--port", "1021", //skip 10
+                // "-s", "/sde1/yx/dataset/replica/habitat/apartment_2", "-m", "/sdf1/yx/pami/draw_fig/replica/rgb", 
+                // "--input", "/sde1/yx/dataset/replica/habitat/apartment_2/0_input_ply/pointcloud_gt_open3d.ply",
+                // "--skip", "1", "--port", "1021", //skip 10
+                "--lambda_l1_normal", "0.001", "--lambda_cos_normal", "0.001",
+                "--densification_interval", "100", "--percent_dense", "0.0005", 
+                // "--load_depth", "--depth_loss", "--flatten_loss",// "--normal_loss"
+                "--patch_size", "20"] //"--rotation_lr", "0.01",  "--percent_dense", "0.0005", "--eval", "--densify_grad_threshold", "0.0005",
+            }
+        ]
+}

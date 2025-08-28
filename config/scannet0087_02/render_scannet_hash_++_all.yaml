@@ -1,0 +1,218 @@
+path:
+  data_basedir: /home/yx/myproject/dino_version
+  dataset_dir: /mnt/nas_new/yx/dataset/pami/scannet/scene0087_02 #TODO
+  seq: 0
+  instance_2d_data_path: /mnt/nas_new/yx/dataset/pami/groundedSAM/scannet/scene0087_02/instance_image # TODO 未对齐的实例ID
+  semantic_2d_data_path: /mnt/nas_new/yx/dataset/pami/groundedSAM/scannet/scene0087_02/semantic_image # TODO 未对齐的semantic
+  proj_dir: /mnt/nas_new/yx/pami/exp/scannet/0087_02_ #/sdd2/yx/pami/0082_02/rgb #TODO
+  dataset_type: scannet
+  
+start_block_idx: 0 
+pretrain: False #True #
+ckpt_path: /mnt/data/yx/exp_result/panoptic_recon++/geo_rgb/v0/grid/optimed_grid_0_49.pth
+BKGD: False #True
+PEmap: False #True #
+
+Thing_class: [2,3,4] #TODO
+Stuff_class: [1,5,6,7,8,9] #TODO
+3DGS: False
+
+vis: False #Ture #   #spend time
+ray_mode: ray
+curl: True
+sem_model: geo #grid #mlp
+
+model:
+  model_name: SDF(sparse) # SH or SDF(sparse)
+  network_structure: geo_rgb_sem #rgb_sem #  geo_rgb_sem (geo_rgb)_sem
+
+img: #TODO
+  height: 968
+  width: 1296
+  height_d: 480
+  width_d: 640
+
+ray:
+  pc_radius: 10
+  min_z: -2.5
+  max_z: 5
+  self_z: 0 #5
+  self_x: 0 #3
+  self_y: 0 #2.5 #横向 
+  depth_min: 0.3
+
+
+frame:
+  step: 3 #TODO
+  num: 1362 #TODO
+
+model_type: 3dgs #separate # shared
+3dgs_mode: None #only_rgb #rgb_depth, rgb_depth_normal
+grid_otype: HashGrid
+grid:
+  sdf:
+    log2_hashmap_size: 22 #40
+    base_resolution: 16
+    max_resolution: 2048
+    n_levels: 16
+    n_features_per_level: 2  
+  semantic:
+    log2_hashmap_size: 22
+    base_resolution: 16
+    max_resolution: 1024 #2048
+    n_levels: 8
+    n_features_per_level: 4 #2
+  instance:
+    log2_hashmap_size: 22
+    base_resolution: 16
+    max_resolution: 1024
+    n_levels: 8
+    n_features_per_level: 4 #8
+
+decoder:
+  sdf:
+    W: 128 #32 # 128 #128
+    D: 1 #2 #1
+    output_ch: 1
+    skips: []
+    n_freq: 0
+    weight_norm: false
+    concat_qp: false
+  semantic:
+    W: 128 #32
+    D: 1
+    output_ch: 10 #14 #7 # stuff:9+1-3
+    skips: []
+    n_freq: 0
+    weight_norm: false
+    concat_qp: false
+
+
+instance:
+  hidden_dim: 32 #64 #128
+  # num_queries: 20 #50 #7
+  num_heads: 8
+  dim_feedforward: 1024
+  num_decoders: 1 #3
+  num_classes: 3 # chair table sofa
+  dropout: 0.0
+  pre_norm: false
+  use_level_embed: false
+  normalize_pos_enc: true
+  positional_encoding_type: "fourier"
+  gauss_scale: 1.0
+
+  shared_decoder: true
+  train_on_segments: false #true
+  # scatter_type: "mean"
+  max_sample_size: false
+
+  # queries
+  non_parametric_queries: false #true
+  random_query_both: false #true  #
+  random_normal: false #true #
+  random_queries: false
+  use_np_features: false
+
+  # exp mode
+  distance_weight: True #False #
+
+panoptic:
+  W: 128
+  D: 1
+  # output_ch: 20 #7+8
+  skips: []
+  n_freq: 0
+  weight_norm: false
+  concat_qp: false
+
+octree:
+  feature_dim: 128 #
+  base_lod: 8 #7
+  num_lods: 1
+
+outside:
+  nerf:
+    D: 8
+    d_in: 4
+    d_in_view: 3
+    W: 256
+    multires: 10
+    multires_view: 4
+    output_ch: 4
+    skips: [4]
+    use_viewdirs: True
+
+params:
+  ray_chunk: 4096 #1400 #8000 #6144 #4096 #2048 ## #4096 #8192 
+  ray_chunk_mode2: 80 #10
+  ray_chunk_img: 800 #2000 #800 #30000
+  ray_chunk_test: 65536 #65536
+  N_sample: 150 #128 200
+  near: 0.2
+  far: 3.0
+  grid_resolution: 256 #[256, 256, 80] #64 #256
+  # voxel_sizes: [0.5, 1.0, 2.0, 8.0]
+  # sem_feature_dim: [3, 3, 3, 3]
+  voxel_sizes: [0.5, 2.0]
+  sem_feature_dim: [4, 2]
+  # decoder_semantic:
+  #   W: 64 #32
+  #   D: 1
+  #   sem_num: 44
+  #   skips: []
+  #   n_freq: 0
+  #   weight_norm: false
+  #   concat_qp: false
+
+loss_term:
+  normal: false #True #
+  # semantic: True #False #False # #
+  semantic2d: True #False #false #
+  semantic3d: false
+  rgb: True #false # 
+  feature: False #True  #
+  depth_completion: False
+  instance: True #False #
+  panoptic: True #False #
+
+
+train:
+  all_pose: [0,1362] #[0,3184] #[0,1095]  
+
+  optim_step: 260
+  
+  mode2:
+    epoch: 20
+    depth_optim: True
+    pose_optim: False #True
+    
+    query_position_optim: True #False #
+    query_radius_optim: True #False #
+    delete_query: True  #False #
+    panoptic_term: True #False #
+
+    pose_epoch: 4
+    geometry_iter: 100
+    occ_lr: 0.01 # 0.01 0.02
+    rgb_lr: 0.015
+    pose_lr: 0 #0.00003 #0.001 #0.00005 #0.01 #0.0001 #0.01
+    s_lr: 0.001 # 1
+    sem_lr: 0.01
+    mlp_lr: 0.01 #0.01 0.001 0.0003
+    occ_lr_decay: 0.95 #0.95 #0.8
+    depth_lamuda: 2.5 #10
+    depth_lamuda_decay: 1 #
+  
+    eik_lamuda: 1 #10
+    smoothing_lamuda: 1 #10 #50
+    sdf_near_lamuda: 30 #20 #20  #50
+    sdf_far_lamuda: 10 #25
+    normal_lamuda: 5
+    rgb_lamuda: 30
+    feature_lamuda: 80 #500 #30 单独
+    semantic_lamuda: 80 #50 #30
+    instance_lamuda: 80 #50
+
+    render_depth: True 
+    save_grid: True
