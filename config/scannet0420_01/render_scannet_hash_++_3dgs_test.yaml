@@ -1,13 +1,14 @@
 path:
   data_basedir: /home/yx/myproject/dino_version
-  dataset_dir: /mnt/data/yx/dataset/scannet/scans/scene0087_02
+  dataset_dir: /mnt/nas_new/yx/dataset/pami/scannet/scene0420_01
   seq: 0
-  instance_2d_data_path: /home/yx/myProject/PaopticRecon++/data/scene0087_02/instance_image # 未对齐的实例ID
-  semantic_2d_data_path: /home/yx/myProject/PaopticRecon++/data/scene0087_02/semantic_image # 原始semantic
+  instance_2d_data_path: /mnt/nas_new/yx/dataset/pami/groundedSAM/scannet/scene0420_01/instance_image # 未对齐的实例ID
+  semantic_2d_data_path: /mnt/nas_new/yx/dataset/pami/groundedSAM/scannet/scene0420_01/semantic_image # 原始semantic
   # proj_dir: /mnt/northcn4/ywx1261068/exp_data/IROS2024/01ablation/scannet/0087_02/1_gro_rgb_sem_ins_new #ours
-  proj_dir: /home/yx/Data/yx/exp_result/panoptic_recon++/ijrr/recon_rgb/3dgs_depth_normal #semantic
+  proj_dir: /mnt/nas_new/yx/pami/exp/scannet/0420_01_3dgs #/sdf1/yx/pami/draw_fig/0420_01 #/mnt/data/yx/exp_result/panoptic_recon++/ijrr/all/scannet/0087_02 #semantic
   dataset_type: scannet
   # savedir will save grid_model, render_videos and logs
+  
   
 start_block_idx: 0 #21 #0
 pretrain: False #True #
@@ -15,8 +16,8 @@ ckpt_path: /mnt/data/yx/exp_result/panoptic_recon++/geo_rgb/v0/grid/optimed_grid
 # ckpt_path: /sdb1/yx/IROS2024/Reconstruction/scannet/0087_02/1_geo_rgb_sem_ins_assignment/v0/grid/optimed_grid_0_4.pth
 BKGD: False #True
 PEmap: False #True #
-Thing_class: [2,3,4]
-Stuff_class: [1,5,6,7,8,9]
+Thing_class: [2,3,5,9]
+Stuff_class: [1,4,6,7,8,10]
 3DGS: False
 
 vis: False #Ture #False   #spend time
@@ -46,45 +47,30 @@ ray:
 
 frame:
   step: 3 #1 #2
-  num: 1362 #1362 #3184 #1095 1095 #75 #145
+  num: 1397 
 
 model_type: 3dgs #separate # shared
+3dgs_mode: only_rgb #None #rgb_depth #only_rgb #rgb_depth_normal #
 grid_otype: HashGrid
 grid:
   sdf:
-    # base_lod: 8 #7 8
-    # num_lods: 3
-    # feature_dim: 8 #6
     log2_hashmap_size: 22 #40
     base_resolution: 16
     max_resolution: 2048
     n_levels: 16
     n_features_per_level: 2  
-  # feature:
-  #   base_lod: 6 #7 8
-  #   num_lods: 4
-  #   feature_dim: 12
-  # rgb:
-  #   # base_lod: 8 #7 8
-  #   # num_lods: 4
-  #   # feature_dim: 12
-  #   log2_hashmap_size: 22
-  #   base_resolution: 32
-  #   max_resolution: 4096
-  #   n_levels: 16
-  #   n_features_per_level: 2
-  # semantic:
-  #   log2_hashmap_size: 22
-  #   base_resolution: 16
-  #   max_resolution: 1024 #2048
-  #   n_levels: 8
-  #   n_features_per_level: 2
-  # instance:
-  #   log2_hashmap_size: 22
-  #   base_resolution: 16
-  #   max_resolution: 1024
-  #   n_levels: 8
-  #   n_features_per_level: 8
+  semantic:
+    log2_hashmap_size: 22
+    base_resolution: 16
+    max_resolution: 1024 #2048
+    n_levels: 8
+    n_features_per_level: 4 #2
+  instance:
+    log2_hashmap_size: 22
+    base_resolution: 16
+    max_resolution: 1024
+    n_levels: 8
+    n_features_per_level: 4 #8
 
 decoder:
   sdf:
@@ -95,83 +81,57 @@ decoder:
     n_freq: 0
     weight_norm: false
     concat_qp: false
-  # rgb:
-  #   W: 128
-  #   D: 3
-  #   output_ch: 3
-  #   skips: []
-  #   use_view_dirs: True # concatenate viewing direction
-  #   use_normals: True # concatenate surface normal
-  #   use_dot_prod: false # concatenate dot product between viewing dir and surface normal
-  #   n_freq: 4
-  #   weight_norm: false
-  #   concat_qp: false
-  #   embedding_a_dim: 0
-  #   encoding: spherical_harmonics # frequency
-  # # feature:
-  # #   W: 512 #128 #32
-  # #   D: 1
-  # #   output_ch: 64 #384 #64
-  # #   skips: []
-  # #   n_freq: 0
-  # #   weight_norm: false
-  # #   concat_qp: false
-  # semantic:
-  #   W: 128 #32
-  #   D: 1
-  #   output_ch: 10 #14 #7 # stuff:9+1-3
-  #   skips: []
-  #   n_freq: 0
-  #   weight_norm: false
-  #   concat_qp: false
-  # # instance:
-  # #   W: 128 #64 #256 #32
-  # #   D: 1 #4
-  # #   output_ch: 300 
-  # #   skips: []
-  # #   n_freq: 0
-  # #   weight_norm: false
-  # #   concat_qp: false
+  semantic:
+    W: 128 #32
+    D: 1
+    output_ch: 11 # TODO
+    skips: []
+    n_freq: 0
+    weight_norm: false
+    concat_qp: false
 
-# instance:
-#   hidden_dim: 64 #128
-#   num_queries: 20 #50 #7
-#   num_heads: 8
-#   dim_feedforward: 1024
-#   num_decoders: 1 #3
-#   num_classes: 3 # chair table sofa
-#   dropout: 0.0
-#   pre_norm: false
-#   use_level_embed: false
-#   normalize_pos_enc: true
-#   positional_encoding_type: "fourier"
-#   gauss_scale: 1.0
 
-#   shared_decoder: true
-#   train_on_segments: false #true
-#   # scatter_type: "mean"
-#   max_sample_size: false
+instance:
+  hidden_dim: 32 #128
+  num_heads: 8
+  dim_feedforward: 1024
+  num_decoders: 1 #3
+  num_classes: 4 # TODO
+  dropout: 0.0
+  pre_norm: false
+  use_level_embed: false
+  normalize_pos_enc: true
+  positional_encoding_type: "fourier"
+  gauss_scale: 1.0
 
-#   # queries
-#   non_parametric_queries: false #true
-#   random_query_both: false #true  #
-#   random_normal: false #true #
-#   random_queries: false
-#   use_np_features: false
+  shared_decoder: true
+  train_on_segments: false #true
+  # scatter_type: "mean"
+  max_sample_size: false
 
-# panoptic:
-#   W: 128
-#   D: 1
-#   # output_ch: 20 #7+8
-#   skips: []
-#   n_freq: 0
-#   weight_norm: false
-#   concat_qp: false
+  # queries
+  non_parametric_queries: false #true
+  random_query_both: false #true  #
+  random_normal: false #true #
+  random_queries: false
+  use_np_features: false
 
-# octree:
-#   feature_dim: 128 #
-#   base_lod: 8 #7
-#   num_lods: 1
+  # exp mode
+  distance_weight: True #False #
+
+panoptic:
+  W: 128
+  D: 1
+  # output_ch: 20 #7+8
+  skips: []
+  n_freq: 0
+  weight_norm: false
+  concat_qp: false
+
+octree:
+  feature_dim: 128 #
+  base_lod: 8 #7
+  num_lods: 1
 
 outside:
   nerf:
@@ -187,8 +147,8 @@ outside:
 
 params:
   ray_chunk: 4096 #1400 #8000 #6144 #4096 #2048 ## #4096 #8192 
-  ray_chunk_mode2: 800 #1500 #80 
-  ray_chunk_img: 0 #800 #30000
+  ray_chunk_mode2: 80 #10
+  ray_chunk_img: 600 #800
   ray_chunk_test: 65536 #65536
   N_sample: 150 #128 200
   near: 0.2
@@ -209,17 +169,18 @@ params:
 
 loss_term:
   normal: false #True #
-  semantic2d: False #True #False #false #
+  # semantic: True #False #False # #
+  semantic2d: True #False #false #
   semantic3d: false
   rgb: True #false # 
   feature: False #True  #
   depth_completion: False
-  instance: False #True #
-  panoptic: False #True
+  instance: True #False #
+  panoptic: True #False #
 
 
 train:
-  all_pose: [0,1362] #[0,3184] #[0,1095]  
+  all_pose: [0,1397] # TODO
 
   optim_step: 260
   
@@ -227,6 +188,12 @@ train:
     epoch: 20
     depth_optim: True
     pose_optim: False #True
+
+    query_position_optim: True #False #
+    query_radius_optim: True #False #
+    delete_query: True  #False #
+    panoptic_term: True #False #
+
     pose_epoch: 4
     geometry_iter: 100
     occ_lr: 0.01 # 0.01 0.02
@@ -247,7 +214,7 @@ train:
     rgb_lamuda: 30
     feature_lamuda: 80 #500 #30 单独
     semantic_lamuda: 80 #50 #30
-    instance_lamuda: 50
+    instance_lamuda: 80
 
     render_depth: True 
     save_grid: True

@@ -208,7 +208,7 @@ class ScannetDataset(Dataset):
 
 
     def __getitem__(self, idxes):
-        #         #         if self.split == "train":
+        if self.split == "train":
             idx = idxes[0]
             idx2 = idxes[1]
             # return self.rays_all[idx, :]

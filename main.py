@@ -1,5 +1,5 @@
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+os.environ["CUDA_VISIBLE_DEVICES"] = "2"
 # os.environ['CUDA_LAUNCH_BLOCKING']="1"
 # os.environ['TCNN_CUDA_ARCHITECTURES']="1"
 os.environ['QT_QPA_PLATFORM']="offscreen"
@@ -23,7 +23,8 @@ import time
 from utils.scannet_data_tools.init_scannet_pose import init_all_poses
 
 import open3d as o3d
-from data.label import labels, id2label
+from data.label import get_labels #id2label
+id2label = get_labels("0420_01")
 
 from models.train import Train, clean_cache
 from utils.mkdir import mkdir_result_folder
@@ -50,7 +51,8 @@ if __name__ == '__main__':
         tensorboard_flag = False if writer == None else True
 
         # yaml_path = "config/scannet0087_02/render_scannet_hash_++_all.yaml"
-        yaml_path = "config/scannet0420_01/render_scannet_hash_++_all.yaml"
+        # yaml_path = "config/scannet0420_01/render_scannet_hash_++_all.yaml"
+        yaml_path = "config/scannet0420_01/render_scannet_hash_++_3dgs_test.yaml"
         # yaml_path = "config/scannetpp_1ada7a0617/render_scannet_hash_++_all.yaml"
         
         config_file = yaml_path.split("/")[-1]

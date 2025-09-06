@@ -76,7 +76,7 @@ class SimpleSampler:
         w, h = dataset_train.w, dataset_train.h
         self.patch_size = 1 #8
         self.w = w // self.patch_size
-        #        self.h = 250 // self.patch_size if dataset=='kitti360' else h // self.patch_size
+        self.h = 250 // self.patch_size if dataset=='kitti360' else h // self.patch_size
         self.h_raw = h // self.patch_size
         self.total = total 
         self.curr = total.int()
@@ -277,7 +277,8 @@ def render_depth(dataloader, grid, config, fn):
 from PIL import Image
 import matplotlib.pyplot as plt
 # from labels_ours import id2label
-from labels_scannet import id2label
+from data.label import get_labels #id2label
+id2label = get_labels("0420_01")
 # from labels import id2label
 def draw_rgb_normal(rgb, i, config, save_dir):
     # rgb_normal = np.vstack((np.zeros([176*1408,3]),rgb)).squeeze()

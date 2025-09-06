@@ -16,9 +16,9 @@
                 // "-m", "/mnt/nas_new/yx/pami/exp/scannet/0000_02/rgb", 
                 // "--input", "/home/yx/Data/exp_result/panoptic_recon++/scannet/0_input_ply/scene0000_02/pointcloud_gt_open3d.ply",
                 // "--skip", "1", "--port", "1021",
-                "-s", "/Data/yx/dataset/scannet++/1ada7a0617", "-m", "/mnt/nas_new/yx/pami/exp/scannet++/1ada7a0617_test/rgb", 
-                "--input", "/home/yx/Data/exp_result/panoptic_recon++/scannetpp/scen_1ada7a0617/0_input_ply/pointcloud_gt_open3d.ply", 
-                "--skip", "1", "--port", "1021", 
+                // "-s", "/Data/yx/dataset/scannet++/1ada7a0617", "-m", "/mnt/nas_new/yx/pami/exp/scannet++/1ada7a0617_test/rgb", 
+                // "--input", "/home/yx/Data/exp_result/panoptic_recon++/scannetpp/scen_1ada7a0617/0_input_ply/pointcloud_gt_open3d.ply", 
+                // "--skip", "1", "--port", "1021", 
                 // "-s", "/Data/yx/dataset/scannet++/5748ce6f01", "-m", "/mnt/nas_new/yx/pami/exp/scannet++/5748ce6f01_wo_hsi_wo_pan/rgb", 
                 // "--input", "/home/yx/Data/exp_result/panoptic_recon++/scannetpp/scen_5748ce6f01/0_input_ply/pointcloud_gt_open3d.ply", 
                 // "--skip", "3", "--port", "1021", 
@@ -27,10 +27,10 @@
                 // "-s", "/sdf1/yx/dataset/scannet/scans/scene0088_00", "-m", "/sdf1/yx/pami/draw_fig/0088_00_new/rgb", 
                 // "--input", "/sdf1/yx/dataset/scannet/3dgs_input_ply/scene0088_00/pointcloud_gt_open3d.ply",
                 // "--skip", "2", "--port", "1021", //skip 10
-                // "-s", "/mnt/nas_new/yx/dataset/pami/scannet/scene0087_02", 
-                // "-m", "/mnt/nas_new/yx/pami/exp/scannet/0087_02/rgb", 
-                // "--input", "/home/yx/Data/exp_result/panoptic_recon++/scannet/0_input_ply/scene0087_02/pointcloud_gt_open3d.ply",
-                // "--skip", "3", "--port", "1021", //skip 10
+                "-s", "/mnt/nas_new/yx/dataset/pami/scannet/scene0420_01", 
+                "-m", "/mnt/nas_new/yx/pami/exp/scannet/0420_01_3dgs/rgb", 
+                "--input", "/home/yx/Data/exp_result/panoptic_recon++/scannet/0_input_ply/scene0420_01/pointcloud_gt_open3d.ply",
+                "--skip", "1", "--port", "1021", //skip 10
                 // "-s", "/sdc1/yx/dataset/scannet/scans/scene0420_01", "-m", "/sdb1/yx/pami/draw_fig/0420_01/rgb", 
                 // "--input", "/sdf1/yx/dataset/scannet/3dgs_input_ply/scene0420_01/pointcloud_gt_open3d.ply",
                 // "--skip", "3", "--port", "1021", //skip 10

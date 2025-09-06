@@ -47,7 +47,7 @@ frame:
   num: 1362 #TODO
 
 model_type: 3dgs #separate # shared
-3dgs_mode: None #only_rgb #rgb_depth, rgb_depth_normal
+3dgs_mode: only_rgb #None #rgb_depth, rgb_depth_normal
 grid_otype: HashGrid
 grid:
   sdf:

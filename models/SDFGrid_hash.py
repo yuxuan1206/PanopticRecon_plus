@@ -29,7 +29,8 @@ import scipy
 import tinycudann as tcnn
 import matplotlib.pyplot as plt
 from instance.models.matcher import batch_sigmoid_ce_loss, batch_dice_loss
-from labels_scannet import labels, id2label
+from data.label import get_labels #id2label
+id2label = get_labels("0420_01")
 
 # from torch.utils.data import DataLoader
 # import torchvision 
@@ -891,7 +892,7 @@ class SDFGrid(BaseGrid):
             valid_mask = ray_mask.clone()
             valid_depth = depth_gt.clone()
             car_mask = None
-            #            if self.pretrain or (self.iter_n>self.geometry_iter and (~ray_mask).sum() != 0):
+            if self.pretrain or (self.iter_n>self.geometry_iter and (~ray_mask).sum() != 0):
                
                 depth_cam = self.get_img_depth(rays_cam, num_samples=5, level=self.octree.active_lods[-1]).squeeze()
                 cam_hit_mask = depth_cam>0
@@ -1778,7 +1779,7 @@ class SDFGrid(BaseGrid):
         targetID2query = {i:j for i, j in zip(labels, assignment[1])} # {gt: new_label(query)}
 
         # targetID2targetClass = {i.item():j.item() for i, j in zip(targets, targets_thing_label)}
-        #        self.query2targetClass = {targetID2query[i.item()]:j.item() for i, j in zip(targets, targets_thing_label) if i.item() in targetID2query.keys() }
+        self.query2targetClass = {targetID2query[i.item()]:j.item() for i, j in zip(targets, targets_thing_label) if i.item() in targetID2query.keys() }
         # self.query2SemanticLabel = {targetID2query[i.item()]:j.item() for i, j in zip(targets, targets_thing_label) if i.item() in targetID2query.keys() }
                     
         return new_labels
