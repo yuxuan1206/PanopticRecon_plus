@@ -79,8 +79,6 @@ conda activate pr
 # Install PyTorch (adjust CUDA version as needed)
 pip install torch==1.11.0+cu113 torchvision==0.12.0+cu113 torchaudio==0.11.0 --extra-index-url https://download.pytorch.org/whl/cu113
 
-# Install basic dependencies
-pip install -r requirements.txt
 ```
 
 ### Step 2: Third-party Libraries
@@ -124,9 +122,6 @@ cmake --build build --config RelWithDebInfo -j 16
 cd bindings/torch
 python setup.py install
 
-# 6. SHEncoder
-cd <PROJECT_PATH>/shencoder
-python setup.py install
 ```
 
 ### Step 4: Download Models
