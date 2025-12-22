@@ -1,0 +1,179 @@
+#!/usr/bin/env groovy
+
+docker_registry_server = ImageTag.split(':')[0..1].join(':')
+currentBuild.displayName = ImageTag.split(':')[2] + "-${arch}"
+currentBuild.description = sourceBranch + ": " + commitHash
+
+podTemplate(
+cloud:'sc-ipp-blossom-prod',
+yaml:"""
+apiVersion: v1
+kind: Pod
+spec:
+  volumes:
+  - name: pvc-mount
+    persistentVolumeClaim:
+      claimName: 'kaolin-pvc'
+  containers:
+  - name: docker
+    image: ${imageTag}
+    command:
+    - cat
+    resources: 
+        requests:
+          nvidia.com/gpu: 1
+        limits:
+          nvidia.com/gpu: 1
+    tty: true
+    volumeMounts:
+      - mountPath: /mnt
+        name: pvc-mount
+  imagePullSecrets:
+  - name: gitlabregcred
+  nodeSelector:
+    kubernetes.io/os: linux
+    nvidia.com/gpu_type: ${arch}
+""") {
+  node(POD_LABEL) {
+    container("docker") {
+      timeout(time: 25, unit: 'MINUTES') {
+        updateGitlabCommitStatus(name: "test-${configName}-${arch}", state: "running")
+        stage("Install deps") {
+          sh 'pip install -r /kaolin/tools/ci_requirements.txt'
+          sh 'apt update && apt install -y unzip && unzip /kaolin/examples/samples/rendered_clock.zip -d /kaolin/examples/samples/'
+        }
+        def build_passed = true
+        try {
+          stage('Disp info') {
+            sh 'nvidia-smi'
+            sh 'python --version'
+          }
+        } catch(e) {
+          build_passed = false
+          echo e.toString()
+        }
+        try {
+          stage("Pytest") {
+            sh '''
+            export KAOLIN_TEST_NVIDIFFRAST=1
+            pytest -s --cov=/kaolin/kaolin /kaolin/tests/python/kaolin
+            '''
+          }
+        } catch(e) {
+          build_passed = false
+          echo e.toString()
+        }
+        try {
+          if (arch == "TITAN_RTX") {
+            stage("Doc examples") {
+              // using wheel you don't have /kaolin/kaolin
+              sh '''
+              if [ -f "/kaolin/kaolin" ]; then
+                  pytest --doctest-modules --ignore=/kaolin/kaolin/experimental /kaolin/kaolin
+              fi
+              '''
+            }
+          }
+        } catch(e) {
+          build_passed = false
+          echo e.toString()
+        }
+        try {
+          stage("DIB-R Tutorial") {
+            sh 'cd /kaolin/examples/tutorial && ipython dibr_tutorial.ipynb'
+          }
+        } catch(e) {
+          build_passed = false
+          echo e.toString()
+        }
+        try {
+          stage("DMTet Tutorial") {
+            sh 'cd /kaolin/examples/tutorial && ipython dmtet_tutorial.ipynb'
+          }
+        } catch(e) {
+          build_passed = false
+          echo e.toString()
+        }
+        try {
+          stage("Understanding SPCs Tutorial") {
+            sh 'cd /kaolin/examples/tutorial && ipython understanding_spcs_tutorial.ipynb'
+          }
+        } catch(e) {
+          build_passed = false
+          echo e.toString()
+        }
+        try {
+          stage("Camera and Rasterization Tutorial") {
+            sh 'cd /kaolin/examples/tutorial && ipython camera_and_rasterization.ipynb'
+          }
+        } catch(e) {
+          build_passed = false
+          echo e.toString()
+        }
+        try {
+          stage("SPC from Pointcloud Recipe") {
+            sh 'cd /kaolin/examples/recipes/dataload/ && python spc_from_pointcloud.py'
+          }
+        } catch(e) {
+          build_passed = false
+          echo e.toString()
+        }
+        try {
+          stage("SPC Basics Recipe") {
+            sh 'cd /kaolin/examples/recipes/spc/ && python spc_basics.py'
+          }
+        } catch(e) {
+          build_passed = false
+          echo e.toString()
+        }
+        try {
+          stage("Occupancy Sampling Recipe") {
+            sh 'cd /kaolin/examples/recipes/preprocess/ && python occupancy_sampling.py'
+          }
+        } catch(e) {
+          build_passed = false
+          echo e.toString()
+        }
+        try {
+          stage("Fast Mesh Sampling Recipe") {
+            sh 'cd /kaolin/examples/recipes/preprocess/ && python fast_mesh_sampling.py --shapenet-dir=/mnt/data/ci_shapenetv2/'
+          }
+        } catch(e) {
+          build_passed = false
+          echo e.toString()
+        }
+        try {
+          stage("SPC Dual Octree Recipe") {
+            sh 'cd /kaolin/examples/recipes/spc/ && python spc_dual_octree.py'
+          }
+        } catch(e) {
+          build_passed = false
+          echo e.toString()
+        }
+        try {
+          stage("SPC Trilinear Interpolation Recipe") {
+            sh 'cd /kaolin/examples/recipes/spc/ && python spc_trilinear_interp.py'
+          }
+        } catch(e) {
+          build_passed = false
+          echo e.toString()
+        }
+        try {
+          stage("SPC Convolution 3D Recipe") {
+            sh 'cd /kaolin/examples/recipes/spc/ && python spc_conv3d_example.py'
+          }
+        } catch(e) {
+          build_passed = false
+          echo e.toString()
+        }
+        if (build_passed) {
+          currentBuild.result = "SUCCESS"
+          updateGitlabCommitStatus(name: "test-${configName}-${arch}", state: "success")
+        } else {
+          currentBuild.result = "FAILURE"
+          updateGitlabCommitStatus(name: "test-${configName}-${arch}", state: "failed")
+        }
+      }
+    }
+  }
+}

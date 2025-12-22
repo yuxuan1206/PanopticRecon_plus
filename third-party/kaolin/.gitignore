@@ -1,0 +1,34 @@
+artifacts
+cuda_*.exe
+miniconda3.exe
+vs_buildtools.exe
+
+
+# all folders starting with _ are local
+_*/
+
+# generated folders
+kaolin/version.py
+build/
+kaolin.egg-info
+*.so
+*.egg
+.eggs/
+kaolin/cython/**/*.cpp
+node_modules/
+
+# byte-compiled python files
+*.py[cod]
+
+# pip cache
+.cache
+
+# editor specific
+*~
+.idea
+.vscode/c_cpp_properties.json
+.vscode/launch.json
+.vscode/settings.json
+.vscode/tasks.json
+*.sw*
+

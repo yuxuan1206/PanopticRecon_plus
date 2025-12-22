@@ -1,0 +1,14 @@
+{%- if show_headings -%}
+.. _{{ basename }}:
+
+{{ basename | e | heading }}
+{%- endif %}
+
+API
+---
+
+.. automodule:: {{ qualname }}
+{%- for option in automodule_options %}
+   :{{ option }}:
+{%- endfor %}
+

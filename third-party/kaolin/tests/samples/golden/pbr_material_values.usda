@@ -1,0 +1,342 @@
+#usda 1.0
+(
+    defaultPrim = "World"
+    upAxis = "Y"
+)
+
+def Xform "World"
+{
+    def Sphere "Default"
+    {
+        rel material:binding = </World/Looks/Default>
+    }
+
+    def "Looks"
+    {
+        def Material "Default"
+        {
+            token outputs:displacement.connect = </World/Looks/Default/Shader.outputs:displacement>
+            token outputs:surface.connect = </World/Looks/Default/Shader.outputs:surface>
+
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoat = 0
+                float inputs:clearcoatRoughness = 0.01
+                color3f inputs:diffuseColor = (0.5, 0.5, 0.5)
+                float inputs:displacement = 0
+                float inputs:ior = 1.5
+                float inputs:metallic = 0
+                normal3f inputs:normal
+                float inputs:opacity = 1
+                float inputs:opacityThreshold = 0
+                float inputs:roughness = 0.5
+                color3f inputs:specularColor = (0, 0, 0)
+                int inputs:useSpecularWorkflow = 0
+                token outputs:displacement
+                token outputs:surface
+            }
+        }
+
+        def Material "Diffuse"
+        {
+            token outputs:displacement.connect = </World/Looks/Diffuse/Shader.outputs:displacement>
+            token outputs:surface.connect = </World/Looks/Diffuse/Shader.outputs:surface>
+
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoat = 0
+                float inputs:clearcoatRoughness = 0.01
+                color3f inputs:diffuseColor = (0, 1, 0)
+                float inputs:displacement = 0
+                float inputs:ior = 1.5
+                float inputs:metallic = 0
+                normal3f inputs:normal
+                float inputs:opacity = 1
+                float inputs:opacityThreshold = 0
+                float inputs:roughness = 0.5
+                color3f inputs:specularColor = (0, 0, 0)
+                int inputs:useSpecularWorkflow = 0
+                token outputs:displacement
+                token outputs:surface
+            }
+        }
+
+        def Material "Roughness"
+        {
+            token outputs:displacement.connect = </World/Looks/Roughness/Shader.outputs:displacement>
+            token outputs:surface.connect = </World/Looks/Roughness/Shader.outputs:surface>
+
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoat = 0
+                float inputs:clearcoatRoughness = 0.01
+                color3f inputs:diffuseColor = (0.5, 0.5, 0.5)
+                float inputs:displacement = 0
+                float inputs:ior = 1.5
+                float inputs:metallic = 0
+                normal3f inputs:normal
+                float inputs:opacity = 1
+                float inputs:opacityThreshold = 0
+                float inputs:roughness = 0.1
+                color3f inputs:specularColor = (0, 0, 0)
+                int inputs:useSpecularWorkflow = 0
+                token outputs:displacement
+                token outputs:surface
+            }
+        }
+
+        def Material "Metallic"
+        {
+            token outputs:displacement.connect = </World/Looks/Metallic/Shader.outputs:displacement>
+            token outputs:surface.connect = </World/Looks/Metallic/Shader.outputs:surface>
+
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoat = 0
+                float inputs:clearcoatRoughness = 0.01
+                color3f inputs:diffuseColor = (0.5, 0.5, 0.5)
+                float inputs:displacement = 0
+                float inputs:ior = 1.5
+                float inputs:metallic = 1
+                normal3f inputs:normal
+                float inputs:opacity = 1
+                float inputs:opacityThreshold = 0
+                float inputs:roughness = 0.5
+                color3f inputs:specularColor = (0, 0, 0)
+                int inputs:useSpecularWorkflow = 0
+                token outputs:displacement
+                token outputs:surface
+            }
+        }
+
+        def Material "Clearcoat"
+        {
+            token outputs:displacement.connect = </World/Looks/Clearcoat/Shader.outputs:displacement>
+            token outputs:surface.connect = </World/Looks/Clearcoat/Shader.outputs:surface>
+
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoat = 1
+                float inputs:clearcoatRoughness = 0.01
+                color3f inputs:diffuseColor = (0.5, 0.5, 0.5)
+                float inputs:displacement = 0
+                float inputs:ior = 1.5
+                float inputs:metallic = 0
+                normal3f inputs:normal
+                float inputs:opacity = 1
+                float inputs:opacityThreshold = 0
+                float inputs:roughness = 0.5
+                color3f inputs:specularColor = (0, 0, 0)
+                int inputs:useSpecularWorkflow = 0
+                token outputs:displacement
+                token outputs:surface
+            }
+        }
+
+        def Material "ClearcoatRougness"
+        {
+            token outputs:displacement.connect = </World/Looks/ClearcoatRougness/Shader.outputs:displacement>
+            token outputs:surface.connect = </World/Looks/ClearcoatRougness/Shader.outputs:surface>
+
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoat = 0
+                float inputs:clearcoatRoughness = 1
+                color3f inputs:diffuseColor = (0.5, 0.5, 0.5)
+                float inputs:displacement = 0
+                float inputs:ior = 1.5
+                float inputs:metallic = 0
+                normal3f inputs:normal
+                float inputs:opacity = 1
+                float inputs:opacityThreshold = 0
+                float inputs:roughness = 0.5
+                color3f inputs:specularColor = (0, 0, 0)
+                int inputs:useSpecularWorkflow = 0
+                token outputs:displacement
+                token outputs:surface
+            }
+        }
+
+        def Material "Opacity"
+        {
+            token outputs:displacement.connect = </World/Looks/Opacity/Shader.outputs:displacement>
+            token outputs:surface.connect = </World/Looks/Opacity/Shader.outputs:surface>
+
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoat = 0
+                float inputs:clearcoatRoughness = 0.01
+                color3f inputs:diffuseColor = (0.5, 0.5, 0.5)
+                float inputs:displacement = 0
+                float inputs:ior = 1.5
+                float inputs:metallic = 0
+                normal3f inputs:normal
+                float inputs:opacity = 0.5
+                float inputs:opacityThreshold = 0
+                float inputs:roughness = 0.5
+                color3f inputs:specularColor = (0, 0, 0)
+                int inputs:useSpecularWorkflow = 0
+                token outputs:displacement
+                token outputs:surface
+            }
+        }
+
+        def Material "OpacityThreshold"
+        {
+            token outputs:displacement.connect = </World/Looks/OpacityThreshold/Shader.outputs:displacement>
+            token outputs:surface.connect = </World/Looks/OpacityThreshold/Shader.outputs:surface>
+
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoat = 0
+                float inputs:clearcoatRoughness = 0.01
+                color3f inputs:diffuseColor = (0.5, 0.5, 0.5)
+                float inputs:displacement = 0
+                float inputs:ior = 1.5
+                float inputs:metallic = 0
+                normal3f inputs:normal
+                float inputs:opacity = 1
+                float inputs:opacityThreshold = 0.5
+                float inputs:roughness = 0.5
+                color3f inputs:specularColor = (0, 0, 0)
+                int inputs:useSpecularWorkflow = 0
+                token outputs:displacement
+                token outputs:surface
+            }
+        }
+
+        def Material "Ior"
+        {
+            token outputs:displacement.connect = </World/Looks/Ior/Shader.outputs:displacement>
+            token outputs:surface.connect = </World/Looks/Ior/Shader.outputs:surface>
+
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoat = 0
+                float inputs:clearcoatRoughness = 0.01
+                color3f inputs:diffuseColor = (0.5, 0.5, 0.5)
+                float inputs:displacement = 0
+                float inputs:ior = 1
+                float inputs:metallic = 0
+                normal3f inputs:normal
+                float inputs:opacity = 1
+                float inputs:opacityThreshold = 0
+                float inputs:roughness = 0.5
+                color3f inputs:specularColor = (0, 0, 0)
+                int inputs:useSpecularWorkflow = 0
+                token outputs:displacement
+                token outputs:surface
+            }
+        }
+
+        def Material "Specular"
+        {
+            token outputs:displacement.connect = </World/Looks/Specular/Shader.outputs:displacement>
+            token outputs:surface.connect = </World/Looks/Specular/Shader.outputs:surface>
+
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoat = 0
+                float inputs:clearcoatRoughness = 0.01
+                color3f inputs:diffuseColor = (0.5, 0.5, 0.5)
+                float inputs:displacement = 0
+                float inputs:ior = 1.5
+                float inputs:metallic = 0
+                normal3f inputs:normal
+                float inputs:opacity = 1
+                float inputs:opacityThreshold = 0
+                float inputs:roughness = 0.5
+                color3f inputs:specularColor = (1, 0, 0)
+                int inputs:useSpecularWorkflow = 1
+                token outputs:displacement
+                token outputs:surface
+            }
+        }
+
+        def Material "Displacement"
+        {
+            token outputs:displacement.connect = </World/Looks/Displacement/Shader.outputs:displacement>
+            token outputs:surface.connect = </World/Looks/Displacement/Shader.outputs:surface>
+
+            def Shader "Shader"
+            {
+                uniform token info:id = "UsdPreviewSurface"
+                float inputs:clearcoat = 0
+                float inputs:clearcoatRoughness = 0.01
+                color3f inputs:diffuseColor = (0.5, 0.5, 0.5)
+                float inputs:displacement = 0.1
+                float inputs:ior = 1.5
+                float inputs:metallic = 0
+                normal3f inputs:normal
+                float inputs:opacity = 1
+                float inputs:opacityThreshold = 0
+                float inputs:roughness = 0.5
+                color3f inputs:specularColor = (0, 0, 0)
+                int inputs:useSpecularWorkflow = 0
+                token outputs:displacement
+                token outputs:surface
+            }
+        }
+    }
+
+    def Sphere "Diffuse"
+    {
+        rel material:binding = </World/Looks/Diffuse>
+    }
+
+    def Sphere "Roughness"
+    {
+        rel material:binding = </World/Looks/Roughness>
+    }
+
+    def Sphere "Metallic"
+    {
+        rel material:binding = </World/Looks/Metallic>
+    }
+
+    def Sphere "Clearcoat"
+    {
+        rel material:binding = </World/Looks/Clearcoat>
+    }
+
+    def Sphere "ClearcoatRougness"
+    {
+        rel material:binding = </World/Looks/ClearcoatRougness>
+    }
+
+    def Sphere "Opacity"
+    {
+        rel material:binding = </World/Looks/Opacity>
+    }
+
+    def Sphere "OpacityThreshold"
+    {
+        rel material:binding = </World/Looks/OpacityThreshold>
+    }
+
+    def Sphere "Ior"
+    {
+        rel material:binding = </World/Looks/Ior>
+    }
+
+    def Sphere "Specular"
+    {
+        rel material:binding = </World/Looks/Specular>
+    }
+
+    def Sphere "Displacement"
+    {
+        rel material:binding = </World/Looks/Displacement>
+    }
+}
+
